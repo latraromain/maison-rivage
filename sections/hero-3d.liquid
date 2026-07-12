@@ -1,0 +1,303 @@
+{%- comment -%}
+  Homepage hero with a lightweight "3D" tilt effect on a single product
+  cutout photo (mouse-tracked on desktop, gentle auto-drift otherwise).
+  Not a true 3D model — see README for the upgrade path to a real
+  .glb/.usdz model via Shopify's native <model-viewer> support once one
+  is available.
+{%- endcomment -%}
+{%- style -%}
+  .hero-3d {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-3d__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero-3d__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(60% 55% at 50% 42%, rgba(0, 0, 0, {{ section.settings.scrim_opacity | divided_by: 100.0 }}) 0%, rgba(0, 0, 0, 0) 70%);
+    pointer-events: none;
+  }
+
+  .hero-3d__stage {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1600px;
+  }
+
+  .hero-3d__product {
+    width: min(70vw, 900px);
+    transform-style: preserve-3d;
+    transition: transform 0.25s ease-out;
+    animation: hero3d-drift 9s ease-in-out infinite;
+  }
+
+  .hero-3d__product img,
+  .hero-3d__product svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.35));
+  }
+
+  .hero-3d.is-tilting .hero-3d__product {
+    animation-play-state: paused;
+    transition: transform 0.08s linear;
+  }
+
+  .hero-3d__heading {
+    margin: 0;
+  }
+
+  .hero-3d__text {
+    margin: 0;
+    max-width: 34ch;
+  }
+
+  .hero-3d__buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.4rem;
+  }
+
+  @keyframes hero3d-drift {
+    0%, 100% { transform: rotateY(-6deg) rotateX(2deg) translateZ(0); }
+    50% { transform: rotateY(6deg) rotateX(-2deg) translateZ(20px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-3d__product {
+      animation: none;
+      transition: none;
+      transform: none !important;
+    }
+  }
+{%- endstyle -%}
+
+<div
+  class="hero-3d color-{{ section.settings.color_scheme }} gradient"
+  id="HeroThreeD-{{ section.id }}"
+  data-hero-3d
+>
+  <div class="hero-3d__stage">
+    <div class="hero-3d__product">
+      {%- if section.settings.product_image != blank -%}
+        {{
+          section.settings.product_image
+          | image_url: width: 1800
+          | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200, 1800', sizes: '70vw'
+        }}
+      {%- else -%}
+        <svg viewBox="0 0 200 90" fill="none" stroke="currentColor" stroke-width="2.2" style="color: rgba(var(--color-foreground), 0.5); width: 40%; margin: 0 auto; display: block;">
+          <rect x="10" y="20" width="70" height="50" rx="4"></rect>
+          <rect x="120" y="20" width="70" height="50" rx="4"></rect>
+          <path d="M80 40h40"></path>
+          <path d="M10 40 0 46"></path>
+          <path d="M190 40l10 6"></path>
+        </svg>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="hero-3d__scrim"></div>
+
+  <div class="hero-3d__content">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'heading' -%}
+          <h1 class="hero-3d__heading {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+            {{ block.settings.heading }}
+          </h1>
+        {%- when 'text' -%}
+          <div class="hero-3d__text {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
+            {{ block.settings.text }}
+          </div>
+        {%- when 'buttons' -%}
+          <div class="hero-3d__buttons" {{ block.shopify_attributes }}>
+            {%- if block.settings.button_label_1 != blank -%}
+              <a
+                {% if block.settings.button_link_1 == blank %}
+                  role="link" aria-disabled="true"
+                {% else %}
+                  href="{{ block.settings.button_link_1 }}"
+                {% endif %}
+                class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
+              >
+                {{ block.settings.button_label_1 | escape }}
+              </a>
+            {%- endif -%}
+            {%- if block.settings.button_label_2 != blank -%}
+              <a
+                {% if block.settings.button_link_2 == blank %}
+                  role="link" aria-disabled="true"
+                {% else %}
+                  href="{{ block.settings.button_link_2 }}"
+                {% endif %}
+                class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
+              >
+                {{ block.settings.button_label_2 | escape }}
+              </a>
+            {%- endif -%}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+<script src="{{ 'hero-3d.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Hero 3D",
+  "class": "section section-hero-3d",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Photo produit (détourée, fond transparent recommandé)",
+      "info": "L'image s'incline légèrement au survol de la souris pour un effet de profondeur. Sans image, un aperçu générique s'affiche."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Palette de couleurs",
+      "default": "scheme-3"
+    },
+    {
+      "type": "range",
+      "id": "scrim_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Voile derrière le texte",
+      "default": 35
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Titre",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Titre",
+          "default": "Maison Rivage"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Taille",
+          "options": [
+            { "value": "h1", "label": "Standard" },
+            { "value": "hxl", "label": "Grand" },
+            { "value": "hxxl", "label": "Très grand" }
+          ],
+          "default": "hxxl"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Texte",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texte",
+          "default": "<p><em>Plus qu'une paire. Une signature.</em></p>"
+        },
+        {
+          "type": "select",
+          "id": "text_style",
+          "label": "Style",
+          "options": [
+            { "value": "body", "label": "Standard" },
+            { "value": "subtitle", "label": "Sous-titre" }
+          ],
+          "default": "subtitle"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Boutons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "label": "Bouton 1",
+          "default": "Découvrir le modèle"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Lien du bouton 1"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_1",
+          "label": "Style secondaire",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Bouton 2",
+          "default": "Voir la collection"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Lien du bouton 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_2",
+          "label": "Style secondaire",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero 3D",
+      "blocks": [
+        { "type": "heading" },
+        { "type": "text" },
+        { "type": "buttons" }
+      ]
+    }
+  ]
+}
+{% endschema %}

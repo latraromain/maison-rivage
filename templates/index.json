@@ -1,13 +1,13 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "hero_3d": {
+      "type": "hero-3d",
       "blocks": {
         "heading": {
           "type": "heading",
           "settings": {
             "heading": "Maison Rivage",
-            "heading_size": "hxl"
+            "heading_size": "hxxl"
           }
         },
         "text": {
@@ -17,7 +17,7 @@
             "text_style": "subtitle"
           }
         },
-        "button": {
+        "buttons": {
           "type": "buttons",
           "settings": {
             "button_label_1": "Découvrir le modèle",
@@ -29,18 +29,11 @@
           }
         }
       },
-      "block_order": ["heading", "text", "button"],
+      "block_order": ["heading", "text", "buttons"],
       "settings": {
-        "image_overlay_opacity": 30,
-        "image_height": "large",
-        "desktop_content_position": "middle-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
+        "product_image": "",
         "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "scrim_opacity": 35
       }
     },
     "featured_product": {
@@ -238,7 +231,7 @@
     }
   },
   "order": [
-    "image_banner",
+    "hero_3d",
     "featured_product",
     "featured_collection",
     "brand_story",
