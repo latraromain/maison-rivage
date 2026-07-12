@@ -16,10 +16,17 @@
         "price": {
           "type": "price"
         },
+        "short_description": {
+          "type": "text",
+          "settings": {
+            "text": "Une silhouette affirmée, façonnée à la main pour devenir votre signature.",
+            "text_style": "body"
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "button",
+            "picker_type": "swatch",
             "swatch_shape": "circle"
           }
         },
@@ -31,6 +38,13 @@
           "settings": {
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": true
+          }
+        },
+        "delivery_note": {
+          "type": "text",
+          "settings": {
+            "text": "Livraison offerte dès 100€ · Expédition sous 24-48h",
+            "text_style": "uppercase"
           }
         },
         "description": {
@@ -47,9 +61,11 @@
         "vendor",
         "title",
         "price",
+        "short_description",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
+        "delivery_note",
         "description",
         "share"
       ],
@@ -70,44 +86,10 @@
       }
     },
     "product_accordion": {
-      "type": "collapsible-content",
-      "blocks": {
-        "materials": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Matières & entretien",
-            "icon": "leather",
-            "row_content": "<p>Acétate italien et titane de qualité chirurgicale. Nettoyez les verres avec le chiffon microfibre fourni ; évitez les solvants et essuie-tout.</p>"
-          }
-        },
-        "shipping": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Livraison & retours",
-            "icon": "truck",
-            "row_content": "<p>Livraison offerte dès 100€ d'achat, expédition sous 24-48h. Retours gratuits sous 30 jours.</p>"
-          }
-        },
-        "warranty": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Garantie 2 ans",
-            "icon": "check_mark",
-            "row_content": "<p>Chaque monture est garantie 2 ans contre tout défaut de fabrication sur la structure et les charnières.</p>"
-          }
-        }
-      },
-      "block_order": ["materials", "shipping", "warranty"],
+      "type": "product-accordion",
       "settings": {
         "heading": "Détails du produit",
-        "heading_size": "h2",
-        "heading_alignment": "left",
-        "layout": "none",
-        "container_color_scheme": "scheme-2",
         "color_scheme": "scheme-1",
-        "open_first_collapsible_row": false,
-        "image_ratio": "adapt",
-        "desktop_layout": "image_first",
         "padding_top": 36,
         "padding_bottom": 20
       }
