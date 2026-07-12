@@ -27,6 +27,7 @@
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
   {{ 'quick-order-list.css' | asset_url | stylesheet_tag }}
   {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+  {{ 'component-card-swatches.css' | asset_url | stylesheet_tag }}
 {%- endunless -%}
 {%- if card_product and card_product != empty -%}
   {%- liquid
@@ -39,6 +40,21 @@
     if ratio == 0 or ratio == null
       assign ratio = 1
     endif
+
+    assign show_signature_badge = false
+    assign show_new_badge = false
+    if card_product.tags contains 'Signature'
+      assign show_signature_badge = true
+    elsif card_product.tags contains 'Nouveau'
+      assign show_new_badge = true
+    endif
+
+    assign color_option = null
+    for option in card_product.options_with_values
+      if option.name == 'Couleur' or option.name == 'Color' or option.name == 'Colour'
+        assign color_option = option
+      endif
+    endfor
   -%}
 
   <product-component view-event-payload="{{ card_product | standard_event_data: 'view', context: product_view_context | escape }}">
@@ -141,6 +157,20 @@
                 >
                   {{- 'products.product.on_sale' | t -}}
                 </span>
+              {%- elsif show_signature_badge -%}
+                <span
+                  id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
+                  class="badge badge--bottom-left color-{{ settings.signature_badge_color_scheme }}"
+                >
+                  Signature
+                </span>
+              {%- elsif show_new_badge -%}
+                <span
+                  id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
+                  class="badge badge--bottom-left color-{{ settings.signature_badge_color_scheme }}"
+                >
+                  Nouveau
+                </span>
               {%- endif -%}
             </div>
           </div>
@@ -207,6 +237,23 @@
               {%- endif -%}
 
               {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+
+              {%- if color_option and color_option.values.size > 1 -%}
+                <div class="rivage-swatches">
+                  {%- for value in color_option.values limit: 3 -%}
+                    <span
+                      class="rivage-swatch"
+                      style="--swatch-color: {% if value.swatch.color %}{{ value.swatch.color }}{% else %}transparent{% endif %};{% if value.swatch.image %} --swatch-image: url({{ value.swatch.image | image_url: width: 50 }});{% endif %}"
+                      title="{{ value }}"
+                    ></span>
+                  {%- endfor -%}
+                  {%- if color_option.values.size > 3 -%}
+                    <span class="rivage-swatch-more">+{{ color_option.values.size | minus: 3 }}</span>
+                  {%- endif -%}
+                  <span class="visually-hidden">Disponible en {{ color_option.values.size }} coloris</span>
+                </div>
+              {%- endif -%}
+
               {%- if card_product.quantity_price_breaks_configured? -%}
                 {% if card_product.variants_count == 1 and quick_add == 'bulk' %}
                   {% liquid
@@ -564,6 +611,20 @@
                 class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}"
               >
                 {{- 'products.product.on_sale' | t -}}
+              </span>
+            {%- elsif show_signature_badge -%}
+              <span
+                id="Badge-{{ section_id }}-{{ card_product.id }}"
+                class="badge badge--bottom-left color-{{ settings.signature_badge_color_scheme }}"
+              >
+                Signature
+              </span>
+            {%- elsif show_new_badge -%}
+              <span
+                id="Badge-{{ section_id }}-{{ card_product.id }}"
+                class="badge badge--bottom-left color-{{ settings.signature_badge_color_scheme }}"
+              >
+                Nouveau
               </span>
             {%- endif -%}
           </div>

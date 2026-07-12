@@ -1,0 +1,23 @@
+.rivage-swatches {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.rivage-swatch {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background-color: var(--swatch-color, rgba(var(--color-foreground), 0.08));
+  background-image: var(--swatch-image, none);
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(var(--color-foreground), 0.25);
+  flex-shrink: 0;
+}
+
+.rivage-swatch-more {
+  font-size: 1.1rem;
+  opacity: 0.6;
+}

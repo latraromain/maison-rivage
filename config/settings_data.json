@@ -155,6 +155,7 @@
       "badge_corner_radius": 0,
       "sale_badge_color_scheme": "scheme-4",
       "sold_out_badge_color_scheme": "scheme-3",
+      "signature_badge_color_scheme": "scheme-4",
       "brand_headline": "Fait pour voir. Fait pour durer.",
       "brand_description": "<p>Depuis notre atelier, chaque monture Maison Rivage est façonnée en acétate italien et titane, pensée pour traverser les saisons sans jamais passer de mode.</p>",
       "brand_image_width": 100,
