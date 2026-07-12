@@ -32,7 +32,7 @@
       "block_order": ["heading", "text", "buttons"],
       "settings": {
         "product_image": "",
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-1",
         "scrim_opacity": 35
       }
     },

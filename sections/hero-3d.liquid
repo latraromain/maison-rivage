@@ -30,7 +30,7 @@
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: radial-gradient(60% 55% at 50% 42%, rgba(0, 0, 0, {{ section.settings.scrim_opacity | divided_by: 100.0 }}) 0%, rgba(0, 0, 0, 0) 70%);
+    background: radial-gradient(60% 55% at 50% 42%, rgba(var(--color-background), {{ section.settings.scrim_opacity | divided_by: 100.0 }}) 0%, rgba(var(--color-background), 0) 70%);
     pointer-events: none;
   }
 
@@ -56,6 +56,17 @@
     width: 100%;
     height: auto;
     display: block;
+  }
+
+  /* Blends a white studio-background product photo into a light hero
+     background, so a real transparent cutout isn't required. Has no
+     effect on already-transparent images. */
+  .hero-3d__product img {
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 30px 40px rgba(17, 17, 17, 0.16));
+  }
+
+  .hero-3d__product svg {
     filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.35));
   }
 
@@ -109,13 +120,11 @@
           | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200, 1800', sizes: '70vw'
         }}
       {%- else -%}
-        <svg viewBox="0 0 200 90" fill="none" stroke="currentColor" stroke-width="2.2" style="color: rgba(var(--color-foreground), 0.5); width: 40%; margin: 0 auto; display: block;">
-          <rect x="10" y="20" width="70" height="50" rx="4"></rect>
-          <rect x="120" y="20" width="70" height="50" rx="4"></rect>
-          <path d="M80 40h40"></path>
-          <path d="M10 40 0 46"></path>
-          <path d="M190 40l10 6"></path>
-        </svg>
+        {{
+          'product-rivage-beige.jpg'
+          | asset_img_url: '1800x'
+          | image_tag: loading: 'eager', fetchpriority: 'high', alt: 'Maison Rivage — modèle Rivage, coloris Beige'
+        }}
       {%- endif -%}
     </div>
   </div>
@@ -179,8 +188,8 @@
     {
       "type": "image_picker",
       "id": "product_image",
-      "label": "Photo produit (détourée, fond transparent recommandé)",
-      "info": "L'image s'incline légèrement au survol de la souris pour un effet de profondeur. Sans image, un aperçu générique s'affiche."
+      "label": "Photo produit (fond blanc studio ou détouré)",
+      "info": "L'image s'incline légèrement au survol de la souris pour un effet de profondeur. Sans image choisie ici, la photo du modèle Rivage (Beige) fournie pendant la conception s'affiche par défaut."
     },
     {
       "type": "color_scheme",
