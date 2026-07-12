@@ -1,0 +1,110 @@
+{%- comment -%}
+  Fixed "Add to cart" bar shown on small screens once the visitor has
+  scrolled past the main add-to-cart button. Submits the SAME native
+  product form via the HTML `form` attribute — no duplicate <form>, no
+  extra JS fetch, so cart/variant validation stays entirely native.
+
+  Accepts:
+  - product: {Object} Product Liquid object
+  - product_form_id: {String} id of the section's native product form
+  - section_id: {String}
+{%- endcomment -%}
+{%- liquid
+  assign sticky_variant = product.selected_or_first_available_variant
+-%}
+
+{%- style -%}
+  sticky-add-to-cart {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+    display: none;
+  }
+
+  sticky-add-to-cart.sticky-add-to-cart--visible {
+    transform: translateY(0);
+  }
+
+  @media screen and (max-width: 989px) {
+    sticky-add-to-cart {
+      display: block;
+    }
+  }
+
+  .sticky-add-to-cart__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    padding: 1rem 1.5rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(var(--color-foreground), 0.12);
+  }
+
+  .sticky-add-to-cart__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .sticky-add-to-cart__title {
+    font-size: 1.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sticky-add-to-cart__price {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+
+  .sticky-add-to-cart__submit {
+    flex-shrink: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    sticky-add-to-cart {
+      transition: none;
+    }
+  }
+{%- endstyle -%}
+
+<sticky-add-to-cart
+  class="color-{{ section.settings.color_scheme }} gradient"
+  data-section="{{ section_id }}"
+  data-add-to-cart-text="{{ 'products.product.add_to_cart' | t | escape }}"
+  data-sold-out-text="{{ 'products.product.sold_out' | t | escape }}"
+>
+  <div class="sticky-add-to-cart__bar">
+    <div class="sticky-add-to-cart__info">
+      <span class="sticky-add-to-cart__title">{{ product.title | escape }}</span>
+      <span class="sticky-add-to-cart__price" data-sticky-price>
+        {%- render 'price', product: product, use_variant: true, show_compare_at_price: false -%}
+      </span>
+    </div>
+    <button
+      type="submit"
+      name="add"
+      form="{{ product_form_id }}"
+      class="sticky-add-to-cart__submit button button--primary"
+      data-sticky-submit
+      {% if sticky_variant.available == false %}
+        disabled
+      {% endif %}
+    >
+      {%- if sticky_variant.available == false -%}
+        {{ 'products.product.sold_out' | t }}
+      {%- else -%}
+        {{ 'products.product.add_to_cart' | t }}
+      {%- endif -%}
+    </button>
+  </div>
+</sticky-add-to-cart>
+
+<script src="{{ 'sticky-add-to-cart.js' | asset_url }}" defer="defer"></script>
