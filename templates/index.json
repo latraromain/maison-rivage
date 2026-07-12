@@ -13,18 +13,18 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Lunettes de soleil façonnées à la main. Acétate italien, charnières en titane, verres polarisés de qualité optique.</p>",
+            "text": "<p><em>Plus qu'une paire. Une signature.</em></p>",
             "text_style": "subtitle"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Découvrir la collection",
-            "button_link_1": "shopify://collections/all",
+            "button_label_1": "Découvrir le modèle",
+            "button_link_1": "shopify://collections/lunettes",
             "button_style_secondary_1": false,
-            "button_label_2": "Notre savoir-faire",
-            "button_link_2": "shopify://pages/notre-maison",
+            "button_label_2": "Voir la collection",
+            "button_link_2": "shopify://collections/lunettes",
             "button_style_secondary_2": true
           }
         }
@@ -43,54 +43,60 @@
         "show_text_below": false
       }
     },
-    "trust_badges": {
-      "type": "trust-badges",
+    "featured_product": {
+      "type": "featured-product",
       "blocks": {
-        "badge-1": {
-          "type": "badge",
+        "text": {
+          "type": "text",
           "settings": {
-            "icon": "sun",
-            "label": "Protection UV400",
-            "text": "100% des rayons UVA/UVB filtrés"
+            "text": "Le modèle qui définit la Maison.",
+            "text_style": "subtitle"
           }
         },
-        "badge-2": {
-          "type": "badge",
+        "title": {
+          "type": "title",
           "settings": {
-            "icon": "gem",
-            "label": "Verres polarisés",
-            "text": "Anti-reflets, netteté absolue"
+            "heading_size": "h0"
           }
         },
-        "badge-3": {
-          "type": "badge",
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
           "settings": {
-            "icon": "award",
-            "label": "Garantie 2 ans",
-            "text": "Sur monture et charnières"
+            "picker_type": "swatch",
+            "swatch_shape": "circle"
           }
         },
-        "badge-4": {
-          "type": "badge",
+        "cta": {
+          "type": "custom_liquid",
           "settings": {
-            "icon": "truck",
-            "label": "Livraison offerte",
-            "text": "Dès 100€ d'achat"
+            "custom_liquid": "<a href=\"{{ product.url }}\" class=\"button button--primary\">Choisir ma couleur</a>"
           }
         }
       },
-      "block_order": ["badge-1", "badge-2", "badge-3", "badge-4"],
+      "block_order": ["text", "title", "price", "variant_picker", "cta"],
       "settings": {
-        "title": "",
-        "color_scheme": "scheme-2",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "product": "",
+        "color_scheme": "scheme-1",
+        "secondary_background": false,
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "hover",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 72,
+        "padding_bottom": 72
       }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "Nos meilleures ventes",
+        "title": "La collection",
         "heading_size": "h1",
         "description": "",
         "show_description": false,
@@ -164,109 +170,48 @@
         "padding_bottom": 80
       }
     },
-    "collections_multirow": {
-      "type": "multirow",
+    "trust_badges": {
+      "type": "trust-badges",
       "blocks": {
-        "row-1": {
-          "type": "row",
+        "badge-1": {
+          "type": "badge",
           "settings": {
-            "caption": "Collection",
-            "heading": "Aviateur",
-            "text": "<p>La silhouette intemporelle, réinterprétée en titane brossé et verres dégradés.</p>",
-            "button_label": "Voir la collection",
-            "button_link": "shopify://collections/aviateur"
+            "icon": "truck",
+            "label": "Livraison suivie",
+            "text": "Expédition sous 24-48h, suivi en temps réel"
           }
         },
-        "row-2": {
-          "type": "row",
+        "badge-2": {
+          "type": "badge",
           "settings": {
-            "caption": "Collection",
-            "heading": "Œil de chat",
-            "text": "<p>Une monture graphique, sculptée en acétate marbré, pour un regard affirmé.</p>",
-            "button_label": "Voir la collection",
-            "button_link": "shopify://collections/oeil-de-chat"
+            "icon": "return",
+            "label": "Retours simplifiés",
+            "text": "30 jours pour changer d'avis"
           }
         },
-        "row-3": {
-          "type": "row",
+        "badge-3": {
+          "type": "badge",
           "settings": {
-            "caption": "Collection",
-            "heading": "Ronde",
-            "text": "<p>L'esprit rétro-chic, verres polarisés et charnières à ressort pour un confort absolu.</p>",
-            "button_label": "Voir la collection",
-            "button_link": "shopify://collections/ronde"
+            "icon": "lock",
+            "label": "Paiement sécurisé",
+            "text": "Carte, Apple Pay, Shop Pay"
+          }
+        },
+        "badge-4": {
+          "type": "badge",
+          "settings": {
+            "icon": "box",
+            "label": "Étui Maison Rivage inclus",
+            "text": "Écrin rigide et chiffon microfibre"
           }
         }
       },
-      "block_order": ["row-1", "row-2", "row-3"],
+      "block_order": ["badge-1", "badge-2", "badge-3", "badge-4"],
       "settings": {
-        "image_height": "medium",
-        "desktop_image_width": "medium",
-        "image_layout": "alternate-left",
-        "heading_size": "h1",
-        "text_style": "body",
-        "color_scheme": "scheme-1",
-        "padding_top": 40,
-        "padding_bottom": 40
-      }
-    },
-    "testimonials": {
-      "type": "testimonials",
-      "blocks": {
-        "review-1": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "quote": "Une finition impeccable et un confort que je n'avais encore jamais trouvé sur une paire de lunettes de soleil.",
-            "name": "Camille D.",
-            "meta": "Cliente vérifiée — Aviateur Titane"
-          }
-        },
-        "review-2": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "quote": "On sent immédiatement la qualité du matériau. Le service client a aussi été irréprochable.",
-            "name": "Antoine R.",
-            "meta": "Client vérifié — Ronde Écaille"
-          }
-        },
-        "review-3": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "quote": "Ma troisième paire chez Maison Rivage. Je ne jure plus que par eux pour un vrai maintien en été.",
-            "name": "Léa M.",
-            "meta": "Cliente vérifiée — Œil de chat"
-          }
-        }
-      },
-      "block_order": ["review-1", "review-2", "review-3"],
-      "settings": {
-        "title": "Ce qu'ils en disent",
-        "color_scheme": "scheme-1",
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
-    "social_gallery": {
-      "type": "social-gallery",
-      "blocks": {
-        "img-1": { "type": "image", "settings": {} },
-        "img-2": { "type": "image", "settings": {} },
-        "img-3": { "type": "image", "settings": {} },
-        "img-4": { "type": "image", "settings": {} },
-        "img-5": { "type": "image", "settings": {} }
-      },
-      "block_order": ["img-1", "img-2", "img-3", "img-4", "img-5"],
-      "settings": {
-        "title": "Portée par vous",
-        "handle": "@maisonrivage",
-        "handle_link": "",
-        "columns_desktop": 5,
-        "color_scheme": "scheme-1",
-        "padding_top": 60,
-        "padding_bottom": 60
+        "title": "",
+        "color_scheme": "scheme-2",
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     },
     "newsletter": {
@@ -275,14 +220,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Rejoignez la Maison",
+            "heading": "Entrez dans l'univers Maison Rivage",
             "heading_size": "h1"
           }
         },
         "paragraph": {
           "type": "paragraph",
           "settings": {
-            "text": "<p>Accès en avant-première aux nouvelles collections et -10% sur votre première commande.</p>"
+            "text": "<p>Découvrez les nouvelles montures, les campagnes et les prochaines éditions.</p>"
           }
         },
         "email_form": {
@@ -301,12 +246,10 @@
   },
   "order": [
     "image_banner",
-    "trust_badges",
+    "featured_product",
     "featured_collection",
     "brand_story",
-    "collections_multirow",
-    "testimonials",
-    "social_gallery",
+    "trust_badges",
     "newsletter"
   ]
 }

@@ -1,8 +1,24 @@
 {%- comment -%}
   Renders one line-style trust/USP icon.
-  Accepts: icon (string) - one of: shield, sun, award, truck, leaf, gem
+  Accepts: icon (string) - one of: shield, sun, award, truck, leaf, gem, lock, box, return
 {%- endcomment -%}
 {%- case icon -%}
+  {%- when 'lock' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <rect x="4.5" y="11" width="15" height="9.5" rx="1"></rect>
+      <path d="M7.5 11V7.5a4.5 4.5 0 0 1 9 0V11"></path>
+    </svg>
+  {%- when 'box' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M3.5 7.5 12 3l8.5 4.5V16.5L12 21l-8.5-4.5z"></path>
+      <path d="M3.5 7.5 12 12l8.5-4.5"></path>
+      <path d="M12 12v9"></path>
+    </svg>
+  {%- when 'return' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M4 12a8 8 0 1 0 2.6-5.9"></path>
+      <path d="M4 3.5V7h3.5"></path>
+    </svg>
   {%- when 'sun' -%}
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
       <circle cx="12" cy="12" r="4.5"></circle>
