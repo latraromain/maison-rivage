@@ -76,6 +76,16 @@
   }
 </style>
 
+{%- liquid
+  assign use_transparent_header = false
+  if section.settings.transparent_on_top and request.page_type == 'index'
+    assign use_transparent_header = true
+    assign transparent_foreground_rgb = section.settings.transparent_foreground_color | color_to_rgb | remove: 'rgb(' | remove: ')'
+    assign opaque_background_rgb = section.settings.opaque_background_color | color_to_rgb | remove: 'rgb(' | remove: ')'
+    assign opaque_foreground_rgb = section.settings.opaque_foreground_color | color_to_rgb | remove: 'rgb(' | remove: ')'
+  endif
+-%}
+
 {%- style -%}
   .header {
     padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem;
@@ -98,6 +108,31 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  {%- if use_transparent_header -%}
+    .header-wrapper--transparent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      background: transparent;
+      --color-background: transparent;
+      --color-foreground: {{ transparent_foreground_rgb }};
+      transition: background-color 0.35s ease, color 0.35s ease;
+    }
+
+    .header-wrapper--transparent .header-wrapper--border-bottom {
+      border-color: transparent;
+    }
+
+    .section-header.scrolled-past-header .header-wrapper--transparent {
+      position: sticky;
+      --color-background: {{ opaque_background_rgb }};
+      --color-foreground: {{ opaque_foreground_rgb }};
+      background-color: rgb(var(--color-background));
+    }
+  {%- endif -%}
 {%- endstyle -%}
 
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
@@ -122,7 +157,7 @@
   {% if header_tag == 'sticky-header' %}
     data-sticky-type="{{ section.settings.sticky_header_type }}"
   {% endif %}
-  class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
+  class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}{% if use_transparent_header %} header-wrapper--transparent{% endif %}"
 >
   {%- liquid
     assign social_links = false
@@ -584,6 +619,35 @@
       "id": "menu_color_scheme",
       "label": "t:sections.header.settings.menu_color_scheme.label",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Header transparent sur l'accueil"
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_on_top",
+      "default": true,
+      "label": "Header transparent au chargement",
+      "info": "S'applique uniquement en haut de la page d'accueil, par-dessus le hero. Devient opaque dès que le visiteur défile."
+    },
+    {
+      "type": "color",
+      "id": "transparent_foreground_color",
+      "label": "Couleur du texte et des icônes (transparent)",
+      "default": "#FAF8F4"
+    },
+    {
+      "type": "color",
+      "id": "opaque_background_color",
+      "label": "Couleur de fond (une fois opaque)",
+      "default": "#F4EFE7"
+    },
+    {
+      "type": "color",
+      "id": "opaque_foreground_color",
+      "label": "Couleur du texte et des icônes (une fois opaque)",
+      "default": "#111111"
     },
     {
       "type": "header",
