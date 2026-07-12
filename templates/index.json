@@ -101,9 +101,9 @@
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
+        "collection": "lunettes",
+        "products_to_show": 5,
+        "columns_desktop": 3,
         "color_scheme": "scheme-1",
         "full_width": false,
         "show_view_all": true,
@@ -127,35 +127,28 @@
         "caption": {
           "type": "caption",
           "settings": {
-            "caption": "Depuis l'atelier",
+            "caption": "L'univers Maison Rivage",
             "text_style": "caption-with-letter-spacing",
             "text_size": "medium"
-          }
-        },
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Fait pour voir. Fait pour durer.",
-            "heading_size": "h1"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Chaque monture Maison Rivage est découpée, poncée et polie à la main dans notre atelier. Nous n'utilisons que de l'acétate italien et du titane de qualité chirurgicale &mdash; pour une paire qui traverse les saisons sans jamais passer de mode.</p>",
+            "text": "<p>Inspirée par la lumière, les lignes du littoral et l'élégance méditerranéenne, Maison Rivage imagine des montures conçues pour traverser les saisons.</p>",
             "text_style": "body"
           }
         },
         "button": {
           "type": "button",
           "settings": {
-            "button_label": "Notre savoir-faire",
-            "button_link": "shopify://pages/notre-maison",
+            "button_label": "Découvrir la Maison",
+            "button_link": "shopify://pages/la-maison",
             "button_style_secondary": true
           }
         }
       },
-      "block_order": ["caption", "heading", "text", "button"],
+      "block_order": ["caption", "text", "button"],
       "settings": {
         "height": "large",
         "desktop_image_width": "medium",
